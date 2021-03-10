@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"gindemo/model"
+	"gindemo/util"
 )
 
 func Login(ctx *gin.Context) {
@@ -43,10 +44,15 @@ func Login(ctx *gin.Context) {
 	}
 }
 
-//Zhuce 注册
+//Reg 注册
 func Reg(ctx *gin.Context) {
+	token, _ := util.GenerateToken("token", "pwd")
+
+	claims, _ := util.ParseToken(token)
+
 	ctx.JSON(200, gin.H{
-		"a": 1,
+		"a":      token,
+		"claims": claims,
 	})
 }
 
