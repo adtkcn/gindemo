@@ -40,6 +40,7 @@ func main() {
 	router.POST("/login", controller.Login)
 
 	router.GET("/reg", controller.Reg)
+	router.GET("/checklogin", controller.CheckLogin)
 
 	router.POST("/upload", controller.Upload)
 
@@ -50,6 +51,9 @@ func main() {
 	router.StaticFS("/public", http.FS(static)) //静态文件 嵌入程序中
 
 	fmt.Println("地址： http://127.0.0.1:8080")
+
+	// util.GenRsaKey(2048)
+
 	router.Run()
 
 }

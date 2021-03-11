@@ -22,7 +22,9 @@ var (
 运行一次计算
 */
 func init() {
-	dsn := "xx:FMKmpFkKD2GMkcjc@tcp(192.168.137.3:3306)/xx?charset=utf8mb4&parseTime=True&loc=Local"
+	// dsn := "xx:FMKmpFkKD2GMkcjc@tcp(192.168.137.3:3306)/xx?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "gindemo:8DCkxkJiZnPWCiCh@tcp(adtk.cn:3306)/gindemo?charset=utf8mb4&parseTime=True&loc=Local"
+
 	DB, Err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix:   "heng_", // 表名前缀，`User` 的表名应该是 `t_users`

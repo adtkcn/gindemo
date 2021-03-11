@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -10,19 +11,19 @@ var jwtSecret = []byte("asdasjkasioasndlkahsdhalksd")
 
 // Claims 生成token结构体
 type Claims struct {
-	Username string `json:"username"`
-	// Password string `json:"password"`
+	ID   string `json:"id"`
+	Name string `json:"name"`
 	jwt.StandardClaims
 }
 
 // GenerateToken 创建token
-func GenerateToken(username, password string) (string, error) {
+func GenerateToken(ID, Name string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(3 * time.Hour)
 
 	claims := Claims{
-		username,
-		// password,
+		ID,
+		Name,
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
 			Issuer:    "gin-blog",
@@ -48,4 +49,16 @@ func ParseToken(token string) (*Claims, error) {
 	}
 
 	return nil, err
+}
+
+// CheckExp 检查token是否有效
+func CheckExp(token string) bool {
+	claims, _ := ParseToken(token)
+	nowTime := time.Now().Unix()
+	if claims.ExpiresAt < nowTime {
+		fmt.Println("登录过期")
+		return false
+	}
+	fmt.Println("登录没过期")
+	return true
 }
