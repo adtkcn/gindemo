@@ -2,11 +2,13 @@ package main
 
 import (
 	"embed"
+	"encoding/hex"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
 
 	"gindemo/controller"
+	"gindemo/util"
 )
 
 //go:embed static/**
@@ -25,6 +27,20 @@ func main() {
 
 	router.GET("/reg", controller.Reg)
 	router.GET("/checklogin", controller.CheckLogin)
+
+	router.GET("/rsa", func(ctx *gin.Context) {
+		eText := util.RSA_Encrypt([]byte("加密数据"), "public.pem")
+
+		dText := util.RSA_Decrypt(eText, "private.pem")
+
+		fmt.Println(hex.EncodeToString(eText))
+		fmt.Println(string(dText))
+		ctx.JSON(200, gin.H{
+			"code": 1,
+			"msg":  "成功",
+			"data": eText,
+		})
+	})
 
 	router.GET("/cookie", func(c *gin.Context) {
 		fmt.Printf("%#v \n", c.Request)

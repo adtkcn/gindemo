@@ -59,11 +59,7 @@ func Login(ctx *gin.Context) {
 func CheckLogin(ctx *gin.Context) {
 	token, _ := ctx.GetQuery("token")
 	Check := util.CheckExp(token)
-	ctx.JSON(200, gin.H{
-		"code": 1,
-		"msg":  "成功",
-		"data": Check,
-	})
+	ctx.JSON(200, gin.H{"code": 1, "msg": "成功", "data": Check})
 }
 
 //Reg 注册
